@@ -1,0 +1,16 @@
+drop function if exists check_available_appointment;
+create function check_available_appointment (dateap date, timestart timestamp, timeend timestamp)
+RETURNS TABLE(total bigint) AS
+$$
+BEGIN
+  return query select count(id) from appointments
+    where date=dateap
+      and (
+            (time_start >= timestart and time_start <= timeend) or
+            (time_end >= timestart and time_end <= timeend) or
+            (time_start <= timestart and time_end >= timeend) or
+            (time_end >= timestart and time_start <= timeend)
+          );
+END;
+$$
+language plpgsql volatile;
