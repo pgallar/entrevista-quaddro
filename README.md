@@ -18,7 +18,7 @@ Using docker compose
 docker-compose up
 ```
 
-First, build your app for production:
+Without using docker: First, build your app for production:
 
 ```sh
 npm run build
